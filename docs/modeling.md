@@ -5,10 +5,10 @@ The modeling stage contains the files needed to run MM-OPES simulations with GRO
 Key files:
 
 - `workflow/modeling/plumed/plumed.dat`: production PLUMED input.
-- `workflow/modeling/plumed/plumed_cmap_dmn1.dat`: domain 1 contact-map rerun input.
-- `workflow/modeling/plumed/plumed_cmap_dmn2.dat`: domain 2 contact-map rerun input.
 - `workflow/modeling/mdp/`: production MDP files for the temperature/replica set.
 - `workflow/modeling/slurm/template.cmd`: SLURM production template.
+
+Contact-map PLUMED files used for trajectory reruns are post-processing inputs and live in `workflow/analysis/post_processing/`.
 
 The SLURM template assumes 16 replicas in directories named `0` through `15`, each containing the corresponding `.tpr`, `plumed.dat`, and checkpoint files.
 

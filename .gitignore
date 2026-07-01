@@ -7,7 +7,6 @@ venv/
 
 # Local generated data and outputs
 /data/*
-!/data/.gitkeep
 /results/*
 !/results/.gitkeep
 /figures/*

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH -J 2B # name of the job
+#SBATCH -J mm-opes # name of the job
 #SBATCH -t 168:00:00 # time requested
 #SBATCH -N 2  # total number of nodes and processes
 #SBATCH -A zerze
@@ -15,20 +15,22 @@ module add GCC cmake
 module add cudatoolkit/11.0
 module add intel-oneapi/2022.2.0
 
-source /home/kmalekza/PROGRAMS/plumed2-v2.8/sourceme.sh
+if [[ -n "${PLUMED_SOURCE:-}" ]]; then
+    source "${PLUMED_SOURCE}"
+fi
 
 # Define number of replicas
-ng=16
+ng="${NREPLICAS:-16}"
 # Which set?
 s=1
 # Full path to application + application name
-application="gmx_gpu mdrun"
+application="${GMX_MDRUN:-gmx_gpu mdrun}"
 
 # Define variables related to protein and ff
-proot="proteina"
-ff="charmm36"
+proot="${PROOT:-proteina}"
+ff="${FF:-charmm36}"
 fileroot="${proot}_${ff}"
-this="opes"
+this="${METHOD:-opes}"
 
 mkdir cpts
 
