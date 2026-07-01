@@ -19,10 +19,7 @@ The current example is based on the Protein A system. Large trajectories, checkp
 │   └── analysis/
 │       ├── post_processing/      # Analysis and post-processing scripts
 │       └── plots/                # Plotting notebooks
-├── examples/                     # System-specific worked examples
-├── data/                         # Local generated data; ignored except .gitkeep
-├── results/                      # Local processed outputs; ignored except .gitkeep
-└── figures/                      # Local generated plots; ignored except .gitkeep
+├── examples_figures               # System-specific worked examples
 ```
 
 ## Requirements
