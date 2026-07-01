@@ -1,0 +1,21 @@
+; Improved Energy Minimization for Large Protein System
+integrator  = steep         ; Steepest descent is still best for first pass
+emtol       = 100.0         ; Target force < 100 kJ/mol/nm
+emstep      = 0.01          ; Increase to 0.02 if it converges too slowly
+nsteps      = 50000         ; Give it more room to work
+
+; Neighbor searching & Electrostatics
+cutoff-scheme   = Verlet    ; REQUIRED for modern GPU/CPU acceleration
+nstlist         = 20        ; Frequency to update neighbor list
+ns_type         = grid
+pbc             = xyz       ; Periodic Boundary Conditions
+
+; Electrostatics & VDW (Standard for AMBER/CHARMM force fields)
+coulombtype     = PME       ; Fast Particle-Mesh Ewald for long-range electrostatics
+rcoulomb        = 1.2       ; Standard cutoff
+vdwtype         = Cut-off
+rvdw            = 1.2
+DispCorr        = EnerPres  ; Long-range dispersion corrections
+
+; Constraints
+constraints     = none      ; Keep as none for EM to let bonds relax

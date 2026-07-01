@@ -1,0 +1,49 @@
+gmx pdb2gmx -f em_prot_mutated.gro -o 2B.gro -ignh
+24
+1
+
+gmx_gpu editconf -f 2B.gro -o 2B_box.gro -c -box 8.5 -bt octahedron
+
+gmx_gpu solvate -cp 2B_box.gro -o 2B_solv.gro -p topol.top
+
+
+gmx_gpu grompp -f ../mini.mdp -c 2B_solv.gro -p topol.top -o 2B_ions.tpr
+
+
+gmx_gpu genion -s 2B_ions.tpr -o 2B_ions.gro -p topol.top -pname NA -nname CL -neutral -conc 0.05
+:%s/NA/SOD/g
+:%s/CL/CLA/g
+
+:%s/  SOD/SOD/g
+:%s/  CLA/CLA/g
+
+gmx_gpu grompp -f new_em.mdp -c 2B_ions.gro -p topol.top -o em.tpr
+
+gmx_gpu mdrun -v -ntomp 1 -deffnm em
+
+Steepest Descents converged to machine precision in 3006 steps,
+but did not reach the requested Fmax < 100.
+Potential Energy  = -8.5986738e+05
+Maximum force     =  5.0774368e+02 on atom 378
+Norm of force     =  8.8958644e+00
+
+./equilibration.sh
+
+python3 make_q_python3.py npt_runT2.pdb npt_out_bb
+Fudge Factor:  1.5
+Cutoff (Angstroms):  5
+Minimum number of bonds between atoms to be counted: 3
+Please respond with one of the letter options below
+(Note that trplists are only useful when more than one TRP is present):
+	All-Atom (aa)
+	Backbone (bb)
+	Side-Chain (sc)
+	Native Hydrogen Bond (hb)
+	Non-native Hydrogen Bond (nn)
+	Tryptophan residues, native (trp)
+	Tryptophan residues, nonnative (trpnn)
+	Turn List (Hydrogen Bonds) (tlh)
+	Turn list (all atom) (tla) :bb
+
+./Q_list_edit.sh
+out_bb > out_bb_edited only residues 7-55 and 108-155

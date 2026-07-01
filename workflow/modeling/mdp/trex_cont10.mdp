@@ -1,0 +1,43 @@
+
+;
+; langevin, initialize velocities
+;
+constraints         =  all-bonds
+integrator          =  md
+ld_seed =   965999
+dt                  =  0.002    ; ps !
+nsteps = 350000000	; 700 ns
+
+;nstcomm		    =  10
+;nstcalcenergy	    =  100 #ask this to Pablo
+nstxout             =  1000000
+nstxtcout           =  10000
+compressed-x-grps   =  Protein
+nstvout             =  0
+nstfout             =  0
+nstlog              =  10000
+nstenergy           =  10000
+
+nstlist             =  100
+ns_type             =  grid
+rlist                    = 1.0
+vdwtype              = cut-off
+rvdw                     = 1.0
+coulombtype              = pme
+rcoulomb                 = 1.0
+fourierspacing = 0.12
+pme_order = 4
+ewald_rtol = 1e-5
+tcoupl			=  v-rescale
+tc-grps             =  protein Water_and_ions
+tau_t               =  1.0 1.0 
+ref_t               =   390.000  390.000  
+; Energy monitoring
+energygrps          =  System
+; Pressure coupling is on
+pcoupl                  = Parrinello-Rahman         ; Pressure coupling on in NPT
+pcoupltype              = isotropic                 ; uniform scaling of box vectors
+tau_p                   = 2.0                       ; time constant, in ps
+ref_p                   = 1.0                       ; reference pressure, in bar
+compressibility     = 4.5e-5                ; isothermal compressibility of water, bar^-1
+gen_vel             =  no
